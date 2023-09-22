@@ -1,9 +1,14 @@
 #!/usr/bin/python3
-def max_integer(my_list=[]):
-    if len(my_list) == 0:
-        return None
-    max = my_list[0]
-    for i in my_list:
-        if i > max:
-            max = i
-    return max
+
+
+def print_matrix_integer(matrix=[[]]):
+    """
+    A function that prints a matrix of integers.
+    """
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            print("{:d}".format(matrix[i][j]), end="")
+            if j != (len(matrix[i]) - 1):
+                print(" ", end="")
+
+        print("")

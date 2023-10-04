@@ -1,35 +1,32 @@
-#!/usr/bin/python3
-# 2-matrix_divided.py
-"""Defines a matrix division function."""
+/*
+ * File: 102-python.c
+ */
 
+#include "Python.h"
 
-def matrix_divided(matrix, div):
-    """Divide all elements of a matrix.
-    Args:
-        matrix (list): A list of lists of ints or floats.
-        div (int/float): The divisor.
-    Raises:
-        TypeError: If the matrix contains non-numbers.
-        TypeError: If the matrix contains rows of different sizes.
-        TypeError: If div is not an int or float.
-        ZeroDivisionError: If div is 0.
-    Returns:
-        A new matrix representing the result of the division.
-    """
-    if (not isinstance(matrix, list) or matrix == [] or
-            not all(isinstance(row, list) for row in matrix) or
-            not all((isinstance(ele, int) or isinstance(ele, float))
-                    for ele in [num for row in matrix for num in row])):
-        raise TypeError("matrix must be a matrix (list of lists) of "
-                        "integers/floats")
+/**
+ * print_python_string - Prints information about Python strings.
+ * @p: A PyObject string object.
+ */
+void print_python_string(PyObject *p)
+{
+	long int length;
 
-    if not all(len(row) == len(matrix[0]) for row in matrix):
-        raise TypeError("Each row of the matrix must have the same size")
+	fflush(stdout);
 
-    if not isinstance(div, int) and not isinstance(div, float):
-        raise TypeError("div must be a number")
+	printf("[.] string object info\n");
+	if (strcmp(p->ob_type->tp_name, "str") != 0)
+	{
+		printf("  [ERROR] Invalid String Object\n");
+		return;
+	}
 
-    if div == 0:
-        raise ZeroDivisionError("division by zero")
+	length = ((PyASCIIObject *)(p))->length;
 
-    return ([list(map(lambda x: round(x / div, 2), row)) for row in matrix])
+	if (PyUnicode_IS_COMPACT_ASCII(p))
+		printf("  type: compact ascii\n");
+	else
+		printf("  type: compact unicode object\n");
+	printf("  length: %ld\n", length);
+	printf("  value: %ls\n", PyUnicode_AsWideCharString(p, &length));
+}
